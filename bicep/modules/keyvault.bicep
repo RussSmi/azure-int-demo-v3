@@ -9,7 +9,7 @@ param env string = 'dev'
 @description('Service Id to group all resources')
 param serviceId string
 
-var keyVaultName = 'kv-${serviceId}-${env}-${uniqueString(resourceGroup().id)}'
+var keyVaultName = 'kv-${serviceId}${env}${uniqueString(resourceGroup().id)}'
 
 resource key_vault 'Microsoft.KeyVault/vaults@2019-09-01' = {
   name: keyVaultName
