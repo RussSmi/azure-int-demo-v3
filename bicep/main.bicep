@@ -18,6 +18,7 @@ param apimPublisherName string
 // variables
 var apimResourceGroupName = 'rg-apim-${serviceId}-${env}'
 var sharedResourceGroupName = 'rg-shared-${serviceId}-${env}'
+var sbusResourceGroupName = 'rg-sbus-${serviceId}-${env}'
 
 resource sharedRg 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   name: sharedResourceGroupName
@@ -65,7 +66,7 @@ module apim './modules/apim.bicep' = {
 }
 
 resource sbusRg 'Microsoft.Resources/resourceGroups@2023-07-01' = {
-  name: sharedResourceGroupName
+  name: sbusResourceGroupName
   location: location
 }
 
