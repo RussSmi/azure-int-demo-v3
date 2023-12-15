@@ -44,7 +44,7 @@ module monitor 'modules/monitor.bicep' = {
   }
 }
 
-resource apimRg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+resource apimRg 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   name: apimResourceGroupName
   location: location
 }
@@ -61,5 +61,20 @@ module apim './modules/apim.bicep' = {
     appInsightsName: monitor.outputs.appInsightsName
     appInsightsId: monitor.outputs.appInsightsId
     appInsightsInstrumentationKey: monitor.outputs.appInsightsInstrumentationKey
+  }
+}
+
+resource sbusRg 'Microsoft.Resources/resourceGroups@2023-07-01' = {
+  name: sharedResourceGroupName
+  location: location
+}
+
+module sbus 'modules/servicebus.bicep' = {
+  scope: sbusRg
+  name: 'sbus-mod-${env}'
+  params: {
+    serviceId: serviceId
+    env: env
+    location: location
   }
 }
