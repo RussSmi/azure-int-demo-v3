@@ -26,3 +26,24 @@ jobs:
            az deployment sub create \
              --location ${{ vars.LOCATION}} \
              --parameters bicep/main.dev.bicepparam
+
+  deploy_test:
+    runs-on: ubuntu-latest
+    environment:
+      name: test
+    steps:
+      # Checkout code
+    - uses: actions/checkout@main
+
+      # Log into Azure
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # Deploy Bicep file
+    - uses: azure/CLI@v1
+      with:
+        inlineScript: |
+            az deployment sub create \
+              --location ${{ vars.LOCATION}} \
+              --parameters bicep/main.test.bicepparam
