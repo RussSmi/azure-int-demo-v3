@@ -9,7 +9,8 @@ param env string = 'dev'
 @description('Service Id to group all resources')
 param serviceId string
 
-var keyVaultName = 'kv-${serviceId}${env}${uniqueString(resourceGroup().id)}'
+// Limit KV name to 24 characters
+var keyVaultName = substring('kv-${serviceId}${env}${uniqueString(resourceGroup().id)}', 0, 24)
 
 resource key_vault 'Microsoft.KeyVault/vaults@2019-09-01' = {
   name: keyVaultName
